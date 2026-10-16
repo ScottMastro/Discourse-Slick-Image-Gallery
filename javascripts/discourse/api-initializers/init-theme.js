@@ -45,21 +45,39 @@ export default apiInitializer((api) => {
       $elem
         .children(slick_selector)
         .not(".slick-initialized")
-        .slick({
-          dots: true,
-          infinite: true,
-          centerMode: true,
-          mobileFirst: true,
-          slide: ".lightbox-wrapper",
-          speed: 200,
-          fade: true,
-          cssEase: "linear",
-          prevArrow: `<button type='button' class='slick-prev'>${iconHTML(
-            settings.Slick_prev_icon
-          )}</button>`,
-          nextArrow: `<button type='button' class='slick-next'>${iconHTML(
-            settings.Slick_next_icon
-          )}</button>`,
+        .each(function () {
+          const $gallery = jQuery(this);
+          const slideCount = $gallery.children(".lightbox-wrapper").length;
+          const useCounter = slideCount > settings.Slick_max_dots;
+
+          // Too many dots wrap into a mess, so show "x / N" instead
+          if (useCounter) {
+            const $counter = jQuery("<div class='slick-counter'></div>");
+            $gallery
+              .on("init", () => {
+                $counter.text(`1 / ${slideCount}`).appendTo($gallery);
+              })
+              .on("beforeChange", (event, slick, currentSlide, nextSlide) => {
+                $counter.text(`${nextSlide + 1} / ${slideCount}`);
+              });
+          }
+
+          $gallery.slick({
+            dots: !useCounter,
+            infinite: true,
+            centerMode: true,
+            mobileFirst: true,
+            slide: ".lightbox-wrapper",
+            speed: 200,
+            fade: true,
+            cssEase: "linear",
+            prevArrow: `<button type='button' class='slick-prev'>${iconHTML(
+              settings.Slick_prev_icon
+            )}</button>`,
+            nextArrow: `<button type='button' class='slick-next'>${iconHTML(
+              settings.Slick_next_icon
+            )}</button>`,
+          });
         }),
     { id: "slick" }
   );

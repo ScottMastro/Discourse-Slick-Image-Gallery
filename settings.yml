@@ -18,3 +18,8 @@ Slick_next_icon:
   default: "chevron-right"
   description:
     en: Choose an icon for the slick next button.
+Slick_max_dots:
+  default: 10
+  min: 1
+  description:
+    en: Galleries with more images than this show an "x / N" counter instead of navigation dots.

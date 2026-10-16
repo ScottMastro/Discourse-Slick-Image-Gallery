@@ -393,3 +393,20 @@ div[data-theme-slick="1"]:not(.slick-initialized) {
 .bio-composer .SlickGallery {
   display: none;
 }
+
+// Slide counter, replaces dots on large galleries
+//------------------------------------------
+.slick-slider:has(.slick-counter) {
+  margin-bottom: 30px;
+}
+
+.slick-counter {
+  position: absolute;
+  bottom: -25px;
+  width: 100%;
+  text-align: center;
+  font-size: var(--font-down-1);
+  line-height: 20px;
+  color: var(--primary-medium);
+  font-variant-numeric: tabular-nums;
+}
